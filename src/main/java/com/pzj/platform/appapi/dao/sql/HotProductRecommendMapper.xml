@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.platform.appapi.dao.HotProductRecommendMapper" >
+  <resultMap id="BaseResultMap" type="com.pzj.platform.appapi.entity.HotProductRecommend" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="app_type" property="appType" jdbcType="TINYINT" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="product_type" property="productType" jdbcType="INTEGER" />
+    <result column="seq" property="seq" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, app_type, province, product_id,product_type,seq
+  </sql>
+  
+  <sql id="sql_of_where">
+		WHERE 1=1 
+		 <if test="bParam != null" >
+			<if test="bParam.appType != null"> AND app_type = #{bParam.appType,jdbcType=TINYINT} </if>
+			<if test="bParam.province != null"> AND province = #{bParam.province,jdbcType=VARCHAR} </if>
+		</if>
+	</sql>
+
+  <sql id="sql_of_page">
+		limit 
+		 <if test="bParam != null" >
+			#{bParam.limitSize,jdbcType=INTEGER},#{bParam.pageSize,jdbcType=INTEGER}
+		</if>
+	</sql>
+	
+	<select id="queryByParamMap" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from hot_product_recommend
+		<include refid="sql_of_where" />
+	          	<![CDATA[  order by seq desc]]>
+	    <include refid="sql_of_page" />
+	</select>
+
+</mapper>

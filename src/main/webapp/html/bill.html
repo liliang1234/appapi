@@ -1,0 +1,96 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta charset="utf-8"/>
+<title>对账单</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="css/mf.jquery.js"></script>
+<style type="text/css">
+body{
+	font-size:15px;
+}
+table{border:1px solid #999;overflow: auto;width="100%"}
+table td{word-break: keep-all;white-space:nowrap;}
+.admintime{
+	overflow: auto;
+}
+</style>
+</head>
+
+<body>
+<div class="clear"></div>
+<div class="problem">账期：2015-08-08 ~ 2015-09-09</div>
+<div class="problem">采购金额：<span id ="realAmount"></span></div>
+<div class="problem">返利金额：<span id ="rebateAmount"></span></div>
+<div class="admintime wenti">
+	
+	<table width="100%" border="1" cellspacing="0" cellpadding="0">	
+				<tr class="tdbg txtweight">
+					<td width="20%">订单号</td>
+					<td width="20%">供应商名称</td>
+					<td width="20%">产品类型</td>
+					<td width="10%">团/散</td>
+					<td width="10%">单价/元</td>
+					<td width="10%">数量</td>
+					<td width="20%">采购金额</td>
+					<td width="20%">返利金额</td>
+				</tr>
+				<tbody id ="table">
+				
+				</tbody>
+				</table>
+				<!-- <table >		
+							
+					
+				</table> -->
+</div>
+<script>
+window.onload=function(){
+		var param = {id:'2215541699909692'}
+		$.ajax({
+			type:"POST",
+			url:"/api/billsOrders", 
+			data:param,
+			async:true,
+			dataType:"json",
+			success:function(data)
+			{
+				var realAmount = 0;
+				var rebateAmount = 0;
+				$.each(data.responseBody.list,function(i,o){
+					realAmount += parseFloat(o.realAmount);
+					rebateAmount += parseFloat(o.rebateAmount);
+					var pType = "团";
+					if(o.isGroup==0){
+						pType = "散";
+					}
+			var s =	"<tr>" +
+				"<td>"+o.orderId+"</td>" +
+				"<td>"+o.supplierName+o.supplierName+"</td>" +
+				"<td>"+o.standardName+"</td>" +
+				"<td>"+pType+"</td>" +
+				"<td>"+o.unitPrice+"</td>" +
+				"<td>"+o.totalNum+"</td>" +
+				"<td>"+o.realAmount+"</td>" +
+				"<td>"+o.rebateAmount+"</td>" +
+				"</tr>"
+			$("#table").append(s);
+
+				})
+				$("#realAmount").text(realAmount.toFixed(2))
+				$("#rebateAmount").text(rebateAmount.toFixed(2))
+				
+			}
+		
+		})
+		}
+</script>
+</body>
+</html>

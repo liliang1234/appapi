@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd        
+    http://code.alibabatech.com/schema/dubbo        
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+	default-lazy-init="true">
+
+	<dubbo:reference id="productDictService"
+		interface="com.pzj.base.service.product.IProductDictService" version="${dubbo.product.service.version}"
+		timeout="${dubbo.timeout}" check="false"/>
+
+	<dubbo:reference id="productSiteDataService"
+		interface="com.pzj.base.service.product.IProductSiteDataService"
+		version="${dubbo.product.service.version}" timeout="${dubbo.timeout}" check="false"/>
+
+	<dubbo:reference id="productRelationService"
+		interface="com.pzj.base.service.product.IProductRelationService"
+		version="${dubbo.product.service.version}" timeout="${dubbo.timeout}" check="false"/>
+
+	<dubbo:reference id="productSalesToolService"
+		interface="com.pzj.base.service.product.IProductSalesToolService"
+		version="${dubbo.product.service.version}" timeout="${dubbo.timeout}" check="false"/>
+
+	<dubbo:reference id="scenicService"
+		interface="com.pzj.base.service.product.IProductScenicService"
+		version="${dubbo.product.service.version}" timeout="${dubbo.timeout}" check="false"/>
+
+	<dubbo:reference id="scenicRelationService"
+		interface="com.pzj.base.service.product.IProductScenicRelationService"
+		version="${dubbo.product.service.version}" timeout="${dubbo.timeout}" check="false"/>
+
+	<dubbo:reference interface="com.pzj.base.service.product.IProductInfoService"
+		id="productInfoService" version="${dubbo.product.service.version}" timeout="${dubbo.timeout}" check="false"/>
+
+	<dubbo:reference interface="com.pzj.base.service.product.IProductReleaseService"
+		id="productReleaseService" version="${dubbo.product.service.version}" timeout="${dubbo.timeout}" check="false"/>
+
+	<dubbo:reference
+		interface="com.pzj.base.service.product.IProductExchangeRelationService"
+		id="productExchangeRelationService" version="${dubbo.product.service.version}"
+		timeout="${dubbo.timeout}" check="false"/>
+
+	<dubbo:reference
+		interface="com.pzj.base.service.product.IProductExchangeStrategyService"
+		id="productExchangeStrategyService" version="${dubbo.product.service.version}"
+		timeout="${dubbo.timeout}" check="false"/>
+
+	<dubbo:reference interface="com.pzj.base.service.product.ISysAreaService"
+		id="areaService" version="${dubbo.product.service.version}" timeout="${dubbo.timeout}" check="false"/>
+	
+	<dubbo:reference
+		interface="com.pzj.base.service.product.IProductRebateRuleService" id="productRebateRuleService"
+		version="${dubbo.product.service.version}" timeout="${dubbo.timeout}" check="false"/>
+
+	<dubbo:reference
+		interface="com.pzj.base.service.product.IProductRebateRuleRelationService"
+		id="productRebateRuleRelationService" version="${dubbo.product.service.version}"
+		timeout="${dubbo.timeout}" check="false"/>
+
+	<dubbo:reference interface="com.pzj.base.service.product.IProductPackageService"
+		id="productPackageService" version="${dubbo.product.service.version}" timeout="${dubbo.timeout}" check="false"/>
+	
+	<dubbo:reference
+		interface="com.pzj.base.service.product.IProductPackageSubService" id="productPackageSubService"
+		version="${dubbo.product.service.version}" timeout="${dubbo.timeout}" check="false"/>
+
+	<dubbo:reference
+		interface="com.pzj.base.service.product.IProductCombineRelationService"
+		id="productCombineRelationService" version="${dubbo.product.service.version}"
+		timeout="${dubbo.timeout}" check="false"/>
+
+	<dubbo:reference interface="com.pzj.base.service.product.IProductBedService"
+		id="productBedService" version="${dubbo.product.service.version}" timeout="${dubbo.timeout}" check="false"/>
+	
+	<dubbo:reference
+		interface="com.pzj.base.service.product.IProductPriceRuleService" id="productPriceRuleService"
+		version="${dubbo.product.service.version}" timeout="${dubbo.timeout}" check="false"/>
+
+	<dubbo:reference interface="com.pzj.base.service.product.IProductPenaltyService"
+		id="productPenaltyService" version="${dubbo.product.service.version}" timeout="${dubbo.timeout}" check="false"/>
+	
+	<dubbo:reference interface="com.pzj.product.service.ISkuProductService"
+		id="skuProductService" version="${dubbo.product.service.version}" timeout="${dubbo.timeout}" check="false"/>
+	
+	<dubbo:reference interface="com.pzj.product.service.ICloseTimeSlotService"
+		id="closeTimeSlotService" version="${dubbo.product.service.version}" timeout="${dubbo.timeout}" check="false"/>
+
+	<dubbo:reference id="userService"
+		interface="com.pzj.base.service.sys.IUserService" version="1.0"
+		timeout="30000" retries="3" check="false" />
+
+	<dubbo:reference id="channelService"
+		interface="com.pzj.base.service.sys.IChannelService" version="1.0"
+		timeout="30000" check="false" />
+
+	<dubbo:reference id="iTicketRuleService"
+		interface="com.pzj.base.service.product.ITicketRuleService" version="1.1"
+		timeout="30000" check="false" />
+
+	<dubbo:reference
+		interface="com.pzj.base.service.product.cache.ProductRedisService" id="productCacheService"
+		version="1.0" timeout="${dubbo.timeout}" check="false"/>
+
+	<dubbo:reference interface="com.pzj.base.service.sys.cache.UserRedisService"
+		id="userCacheService" version="1.0" timeout="30000" check="false" />
+	<dubbo:reference interface="com.pzj.product.service.ProductActingService" 
+		id="productActingService" version = "1.1" timeout="30000" check="false" />
+	<dubbo:reference id="skuScenicService" interface="com.pzj.product.service.ISkuScenicService"
+		 version="${dubbo.product.service.version}" timeout="30000"/>
+	<dubbo:reference interface="com.pzj.product.service.ISkuFilledService"
+         id="skuFilledService" version="1.1" timeout="30000" check="false" />	 
+</beans>

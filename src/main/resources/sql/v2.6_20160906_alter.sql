@@ -1,0 +1,1 @@
+ALTER TABLE `hot_product_recommend` CHANGE `product_type` `product_type` INT(5)  NOT NULL  COMMENT '产品类型(参照：http://10.0.18.11:8080/pages/viewpage.action?pageId=6360116）';

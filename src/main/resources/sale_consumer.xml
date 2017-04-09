@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd        
+    http://code.alibabatech.com/schema/dubbo        
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<dubbo:reference id="iResellerPartnerService"
+		interface="com.pzj.base.service.entrance.ResellerPartnerService"
+		version="1.0" timeout="30000" check="false" />
+	<dubbo:reference id="iOrdersService"
+		interface="com.pzj.base.service.sale.IOrdersService" version="1.0"
+		timeout="30000" check="false" />
+	<dubbo:reference id="iTicketsService"
+		interface="com.pzj.base.service.sale.ITicketsService" version="1.0"
+		timeout="30000" check="false" />
+	<dubbo:reference id="idService"
+		interface="com.pzj.base.service.sale.IdService" version="1.0" timeout="30000"
+		check="false" />
+	<dubbo:reference id="iChartService"
+		interface="com.pzj.base.service.show.IChartService" version="1.0"
+		timeout="30000" check="false" />
+	<dubbo:reference id="screeningChartService"
+		interface="com.pzj.base.service.show.IScreeningChartService" version="1.0"
+		timeout="30000" check="false" />
+	<dubbo:reference id="iAppointSeatService"
+		interface="com.pzj.base.service.show.IAppointSeatService" version="1.0"
+		timeout="30000" check="false" />
+	<dubbo:reference id="iFreeVoucherService"
+		interface="com.pzj.base.service.sale.IFreeVoucherService" version="1.0"
+		timeout="30000" check="false" />
+	<dubbo:reference id="iSpecialVoucherService"
+		interface="com.pzj.base.service.sale.ISpecialVoucherService" version="1.0"
+		timeout="30000" check="false" />
+	<dubbo:reference id="iVoucherOrderService"
+		interface="com.pzj.base.service.sale.IVoucherOrderService" version="1.0"
+		timeout="30000" check="false" />
+	<dubbo:reference id="iProtocolUnitService"
+		interface="com.pzj.base.service.sale.IProtocolUnitService" version="1.0"
+		timeout="30000" check="false" />
+	<dubbo:reference id="iVoucherTemplateService"
+		interface="com.pzj.base.service.sale.IVoucherTemplateService" version="1.0"
+		timeout="30000" check="false" />
+	<dubbo:reference id="idBuilderService"
+		interface="com.pzj.base.service.sale.IdBuilderService" version="1.0"
+		timeout="30000" check="false" />
+	<dubbo:reference id="iOrdersRefundService"
+		interface="com.pzj.base.service.refund.IOrdersRefundService" version="1.0"
+		timeout="30000" check="false" />
+	<dubbo:reference id="iSeatStockService"
+		interface="com.pzj.base.service.show.ISeatStockService" version="1.0"
+		timeout="30000" check="false" />
+	<dubbo:reference id="seatStockDetailService"
+		interface="com.pzj.base.service.show.ISeatStockDetailService" version="1.0"
+		timeout="30000" check="false" />
+	<dubbo:reference id="iRebateOrderDataService"
+		interface="com.pzj.base.service.rebate.IRebateOrderDataService"
+		version="1.0" timeout="30000" check="false" />
+	<dubbo:reference id="iRebateOrderTicketDataService"
+		interface="com.pzj.base.service.rebate.IRebateOrderTicketDataService"
+		version="1.0" timeout="30000" check="false" />
+	<dubbo:reference id="iEntranceService"
+		interface="com.pzj.base.service.entrance.IEntranceService" version="1.0"
+		timeout="30000" check="false" />
+	<dubbo:reference id="iInvoiceRecordService"
+		interface="com.pzj.base.service.print.IInvoiceRecordService" version="1.0"
+		timeout="30000" check="false" />
+	<dubbo:reference id="iPaperTicketRecordService"
+		interface="com.pzj.base.service.print.IPaperTicketRecordService"
+		version="1.0" timeout="30000" check="false" />
+	<dubbo:reference id="cacheService"
+		interface="com.pzj.base.service.cache.CacheService" version="1.0"
+		timeout="30000" check="false" />
+	<dubbo:reference id="ticketOrderDetailServiceImpl"
+		interface="com.pzj.base.service.sale.ITicketOrderDetailService"
+		version="1.0" timeout="30000" check="false" />
+	<dubbo:reference id="iOrderQueryService"
+		interface="com.pzj.base.service.sale.IOrderQueryService" version="1.0"
+		timeout="30000" check="false" />
+	<dubbo:reference id="iRefundLogService"
+		interface="com.pzj.base.service.refund.IRefundLogService" version="1.0"
+		timeout="30000" check="false" />
+	<dubbo:reference id="iSeatDockingService" interface="com.pzj.dock.supplier.service.ISeatDockingService" 
+		version="1.0" timeout="1000" />
+</beans>

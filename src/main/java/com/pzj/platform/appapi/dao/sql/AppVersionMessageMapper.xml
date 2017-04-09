@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pzj.platform.appapi.dao.AppVersionMessageMapper">
+
+	<!--实体映射-->
+	<resultMap id="appVersionMessage" type="com.pzj.platform.appapi.entity.AppVersionMessage">
+		<!--主键ID-->
+		<id property="id" column="id" jdbcType="BIGINT" />
+		<!--应用名称-->
+		<result property="appName" column="app_name" jdbcType="VARCHAR" />
+		<!--版本名字-->
+		<result property="versionName" column="version_name" jdbcType="VARCHAR" />
+		<!--版本号-->
+		<result property="versionCode" column="version_code" jdbcType="INTEGER" />
+		<!--平台(0 android,1 ios)-->
+		<result property="platform" column="platform" jdbcType="TINYINT" />
+		<!--渠道号（服务器根据channel 给出相应下载地址，考虑友盟统计）-->
+		<result property="channel" column="channel" jdbcType="VARCHAR" />
+		<!--系统版本号（扩展字段，服务器决定是否处理）-->
+		<result property="oSVersion" column="oSVersion" jdbcType="VARCHAR" />
+		<!--机器型号（扩展字段，服务器决定是否处理）-->
+		<result property="deviceModel" column="device_model" jdbcType="VARCHAR" />
+		<!--url-->
+		<result property="md5" column="md5" jdbcType="VARCHAR" />
+		<!--(apk md5)-->
+		<result property="downloadUrl" column="download_url" jdbcType="VARCHAR" />
+		<!--更新信息-->
+		<result property="updateMsg" column="update_msg" jdbcType="VARCHAR" />
+		<!--是否强制更新：1强制，0非强制-->
+		<result property="forceUpdate" column="force_update" jdbcType="TINYINT" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		id,app_name,version_name,version_code,platform,channel,oSVersion,device_model,md5,download_url,update_msg,force_update
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultMap="appVersionMessage" parameterType="java.lang.Long">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM tbl_app_version_message
+		 WHERE id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<!-- 查询（匹配有值的字段）-->
+	<select id="selectByObject" resultMap="appVersionMessage" parameterType="com.pzj.platform.appapi.entity.AppVersionMessage">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM tbl_app_version_message
+ 		<where>
+			<if test="appName != null">
+				 AND  app_name = #{appName,jdbcType=VARCHAR}
+			</if>
+			<if test="versionName != null">
+				 AND  version_name = #{versionName,jdbcType=VARCHAR}
+			</if>
+			<if test="versionCode != null">
+				<![CDATA[  AND  version_code > #{versionCode,jdbcType=INTEGER} ]]>
+			</if>
+			<if test="platform != null">
+				 AND  platform = #{platform,jdbcType=TINYINT}
+			</if>
+			<if test="channel != null">
+				 AND  channel = #{channel,jdbcType=VARCHAR}
+			</if>
+			<if test="oSVersion != null">
+				 AND  oSVersion = #{oSVersion,jdbcType=VARCHAR}
+			</if>
+			<if test="deviceModel != null">
+				 AND  device_model = #{deviceModel,jdbcType=VARCHAR}
+			</if>
+			<if test="md5 != null">
+				 AND  md5 = #{md5,jdbcType=VARCHAR}
+			</if>
+			<if test="downloadUrl != null">
+				 AND  download_url = #{downloadUrl,jdbcType=VARCHAR}
+			</if>
+			<if test="updateMsg != null">
+				 AND  update_msg = #{updateMsg,jdbcType=VARCHAR}
+			</if>
+			<if test="forceUpdate != null">
+				 AND  force_update = #{forceUpdate,jdbcType=TINYINT}
+			</if>
+ 		</where>
+ 		order by  version_code desc
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		 DELETE FROM tbl_app_version_message
+		 WHERE id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.pzj.platform.appapi.entity.AppVersionMessage">
+		 INSERT INTO tbl_app_version_message
+ 		(id,app_name,version_name,version_code,
+ 		   platform,channel,oSVersion,
+ 		   device_model,md5,download_url,
+ 		   update_msg,force_update) 
+		 VALUES  #{id,jdbcType=BIGINT},#{appName,jdbcType=VARCHAR},#{versionName,jdbcType=VARCHAR},#{versionCode,jdbcType=INTEGER},
+ 		   #{platform,jdbcType=TINYINT},#{channel,jdbcType=VARCHAR},#{oSVersion,jdbcType=VARCHAR},
+ 		   #{deviceModel,jdbcType=VARCHAR},#{md5,jdbcType=VARCHAR},#{downloadUrl,jdbcType=VARCHAR},
+ 		   #{updateMsg,jdbcType=VARCHAR},#{forceUpdate,jdbcType=TINYINT}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.pzj.platform.appapi.entity.AppVersionMessage">
+		 INSERT INTO tbl_app_version_message
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="appName != null">
+				 app_name,
+			</if>
+			<if test="versionName != null">
+				 version_name,
+			</if>
+			<if test="versionCode != null">
+				 version_code,
+			</if>
+			<if test="platform != null">
+				 platform,
+			</if>
+			<if test="channel != null">
+				 channel,
+			</if>
+			<if test="oSVersion != null">
+				 oSVersion,
+			</if>
+			<if test="deviceModel != null">
+				 device_model,
+			</if>
+			<if test="md5 != null">
+				 md5,
+			</if>
+			<if test="downloadUrl != null">
+				 download_url,
+			</if>
+			<if test="updateMsg != null">
+				 update_msg,
+			</if>
+			<if test="forceUpdate != null">
+				 force_update,
+			</if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id,jdbcType=BIGINT},
+			</if>
+			<if test="appName!=null">
+				 #{appName,jdbcType=VARCHAR},
+			</if>
+			<if test="versionName!=null">
+				 #{versionName,jdbcType=VARCHAR},
+			</if>
+			<if test="versionCode!=null">
+				 #{versionCode,jdbcType=INTEGER},
+			</if>
+			<if test="platform!=null">
+				 #{platform,jdbcType=TINYINT},
+			</if>
+			<if test="channel!=null">
+				 #{channel,jdbcType=VARCHAR},
+			</if>
+			<if test="oSVersion!=null">
+				 #{oSVersion,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceModel!=null">
+				 #{deviceModel,jdbcType=VARCHAR},
+			</if>
+			<if test="md5!=null">
+				 #{md5,jdbcType=VARCHAR},
+			</if>
+			<if test="downloadUrl!=null">
+				 #{downloadUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="updateMsg!=null">
+				 #{updateMsg,jdbcType=VARCHAR},
+			</if>
+			<if test="forceUpdate!=null">
+				 #{forceUpdate,jdbcType=TINYINT},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改（匹配有值的字段）-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.pzj.platform.appapi.entity.AppVersionMessage">
+		 UPDATE tbl_app_version_message
+ 		 <set> 
+			<if test="appName != null">
+				 app_name = #{appName,jdbcType=VARCHAR},
+			</if>
+			<if test="versionName != null">
+				 version_name = #{versionName,jdbcType=VARCHAR},
+			</if>
+			<if test="versionCode != null">
+				 version_code = #{versionCode,jdbcType=INTEGER},
+			</if>
+			<if test="platform != null">
+				 platform = #{platform,jdbcType=TINYINT},
+			</if>
+			<if test="channel != null">
+				 channel = #{channel,jdbcType=VARCHAR},
+			</if>
+			<if test="oSVersion != null">
+				 oSVersion = #{oSVersion,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceModel != null">
+				 device_model = #{deviceModel,jdbcType=VARCHAR},
+			</if>
+			<if test="md5 != null">
+				 md5 = #{md5,jdbcType=VARCHAR},
+			</if>
+			<if test="downloadUrl != null">
+				 download_url = #{downloadUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="updateMsg != null">
+				 update_msg = #{updateMsg,jdbcType=VARCHAR},
+			</if>
+			<if test="forceUpdate != null">
+				 force_update = #{forceUpdate,jdbcType=TINYINT},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<!-- 修改-->
+	<update id="updateByPrimaryKey" parameterType="com.pzj.platform.appapi.entity.AppVersionMessage">
+		 UPDATE tbl_app_version_message
+		 SET 
+			 app_name = #{appName,jdbcType=VARCHAR},
+			 version_name = #{versionName,jdbcType=VARCHAR},
+			 version_code = #{versionCode,jdbcType=INTEGER},
+			 platform = #{platform,jdbcType=TINYINT},
+			 channel = #{channel,jdbcType=VARCHAR},
+			 oSVersion = #{oSVersion,jdbcType=VARCHAR},
+			 device_model = #{deviceModel,jdbcType=VARCHAR},
+			 md5 = #{md5,jdbcType=VARCHAR},
+			 download_url = #{downloadUrl,jdbcType=VARCHAR},
+			 update_msg = #{updateMsg,jdbcType=VARCHAR},
+			 force_update = #{forceUpdate,jdbcType=TINYINT}
+		 WHERE id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans        
+    http://www.springframework.org/schema/beans/spring-beans.xsd        
+    http://code.alibabatech.com/schema/dubbo        
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- -->
+	<dubbo:reference id="stockQueryService"
+		interface="com.pzj.core.stock.service.StockQueryService" version="1.0">
+		<dubbo:method name="queryStockByDate" retries="0"
+			timeout="3000" />
+	</dubbo:reference>
+
+	<dubbo:reference id="stockRuleQueryService"
+		interface="com.pzj.core.stock.service.StockRuleQueryService" version="1.0">
+		<dubbo:method name="queryStockRulesByParam" retries="0"
+			timeout="3000" />
+	</dubbo:reference>
+
+	<dubbo:reference id="screeingsQueryService"
+		interface="com.pzj.core.product.service.ScreeingsQueryService"
+		version="1.0">
+		<dubbo:method name="queryScreeingsById" retries="0"
+			timeout="3000" />
+	</dubbo:reference>
+	<dubbo:reference id="actingQueryService"
+		interface="com.pzj.core.product.service.ActingQueryService" version="1.0">
+		<dubbo:method name="queryActingById" retries="0" timeout="3000" />
+	</dubbo:reference>
+	<dubbo:reference id="showService"
+		interface="com.pzj.core.stock.service.ShowService" version="1.0">
+		<dubbo:method name="randomAssignSeat" retries="0" timeout="3000" />
+	</dubbo:reference>
+<!-- 操作库存 -->
+	<dubbo:reference id="stockService" interface="com.pzj.core.stock.service.StockService"
+	 check="false" version="1.0" timeout="3000" />
+	<!-- 生成座位 -->
+	<dubbo:reference id="seatService" interface="com.pzj.core.stock.service.SeatService"
+	 check="false" version="1.0" timeout="3000" />
+	<!-- 操作座位图 -->
+	<dubbo:reference id="seatChartService" interface="com.pzj.core.stock.service.SeatChartService"
+	 check="false" version="1.0" timeout="3000" />
+</beans>

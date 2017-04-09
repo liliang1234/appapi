@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.platform.appapi.dao.HomeClassificationConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.pzj.platform.appapi.entity.HomeClassificationConfig" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="app_type" property="appType" jdbcType="TINYINT" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="TINYINT" />
+    <result column="icon_2x" property="icon2x" jdbcType="VARCHAR" />
+    <result column="icon_3x" property="icon3x" jdbcType="VARCHAR" />
+    <result column="text" property="text" jdbcType="VARCHAR" />
+    <result column="seq" property="seq" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, app_type, province, code, icon_2x,icon_3x, text, seq
+  </sql>
+  
+  <sql id="sql_of_where">
+		WHERE 1=1 
+		 <if test="bParam != null" >
+			<if test="bParam.appType != null"> AND app_type = #{bParam.appType,jdbcType=TINYINT} </if>
+			<if test="bParam.province != null"> AND province = #{bParam.province,jdbcType=VARCHAR} </if>
+		</if>
+	</sql>
+
+	<select id="queryByParamMap" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from home_classification_config
+		<include refid="sql_of_where" />
+	          	<![CDATA[  order by seq desc]]>
+	</select>
+
+</mapper>

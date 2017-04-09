@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="  
+        http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd  
+        http://www.springframework.org/schema/cache  
+        http://www.springframework.org/schema/cache/spring-cache-3.1.xsd"
+	default-autowire="byName">
+	<bean id="propertyLoader" class="com.pzj.platform.appapi.util.PropertyLoader">
+		<!--第一个参数，引入properties文件的路径 ，以classes文件夹为起点，这里只能写路径，代表引入所有该路径下的.properties文件-->
+		<constructor-arg>
+			<value></value>
+		</constructor-arg>
+		<!-- 排除的文件，也是在第一个路径下，不被引入的文件，每一行value单写一个文件名-->
+		<constructor-arg>
+			<list>
+			</list>
+		</constructor-arg>
+		<!-- 通过lazy mode加载的properties文件，初始化的时候不会被加载，只有使用的时候被加载-->
+		<constructor-arg>
+			<list>
+			</list> 
+		</constructor-arg>
+		<!-- 监控所有properties文件修改的周期，每隔X秒会扫描一下所有被直接加载的文件和lazy mode加载的文件，如果在启动后properties文件被修改了
+		如果在启动后properties文件被修改了，那么propertyLoader会自动引入直接加载的文件；LazyMode加载的文件会被清除，便于下次加载-->
+		<constructor-arg>
+			<value>120</value>
+		</constructor-arg>
+	</bean>
+</beans>

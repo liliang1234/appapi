@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.platform.appapi.dao.HotWordsMapper">
+
+	<resultMap id="BaseResultMap" type="com.pzj.platform.appapi.entity.HotWords">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="keywords" property="keywords" jdbcType="VARCHAR" />
+		<result column="seq" property="seq" jdbcType="INTEGER" />
+	</resultMap>
+
+	<select id="queryByParamMap" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from hot_words
+		<include refid="sql_of_where" />
+	          	<![CDATA[  order by seq desc]]>
+	</select>
+
+	<sql id="Base_Column_List">
+		id, keywords, seq
+	</sql>
+
+	<sql id="sql_of_where">
+		WHERE 1=1
+		<if test="bParam != null">
+			<if test="bParam.keywords != null"> AND keywords = #{bParam.keywords,jdbcType=VARCHAR} </if>
+		</if>
+	</sql>
+
+</mapper>

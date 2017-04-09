@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd        
+    http://code.alibabatech.com/schema/dubbo        
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<!-- old <dubbo:reference id="smsSendService" interface="com.pzj.base.service.SMSSendService" 
+		timeout="30000" retries="0" version="1.0" check="false" /> -->
+	<dubbo:reference id="smsSendService"
+		interface="com.pzj.message.sms.service.SmsSendService" check="false"
+		version="1.1" timeout="3000" />
+
+	<dubbo:reference id="sellCheckingApi"
+		interface="com.pzj.settlement.base.api.SellCheckingApi" timeout="30000"
+		version="1.0" check="false" />
+	<dubbo:reference id="accountService"
+		interface="com.pzj.settlement.base.service.IAccountService" timeout="30000"
+		version="1.0" check="false" />
+
+
+	<dubbo:reference id="tradeOrderService"
+		interface="com.pzj.trade.order.service.OrderService" version="1.1"
+		timeout="30000" retries="0" check="false" />
+	<dubbo:reference id="tradeCancelService"
+		interface="com.pzj.trade.order.service.CancelService" version="1.1"
+		timeout="30000" retries="0" check="false" />
+	<dubbo:reference id="refundService"
+		interface="com.pzj.trade.refund.service.RefundService" version="1.1"
+		timeout="30000" retries="0" check="false" />
+	<dubbo:reference id="paymentService"
+		interface="com.pzj.trade.payment.service.PaymentService" version="1.1"
+		timeout="30000" retries="0" check="false" />
+	<dubbo:reference id="cashPostalService"
+		interface="com.pzj.trade.withdraw.service.CashPostalService" version="1.1"
+		timeout="30000" retries="0" check="false" />
+	<dubbo:reference id="refOrderQueryService"
+		interface="com.pzj.trade.order.service.OrderQueryService" version="1.1"
+		timeout="30000" retries="0" check="false" />
+	<dubbo:reference id="calculateService" 
+		interface="com.pzj.trade.calculate.service.CalculateService" version="1.1"
+		timeout="30000" retries="0" check="false" />
+
+	<dubbo:reference id="iUserService"
+		interface="com.pzj.base.service.sys.IUserService" timeout="30000"
+		retries="0" version="1.0" check="false" />
+	<dubbo:reference id="iRoleService"
+		interface="com.pzj.base.service.sys.IRoleService" timeout="30000"
+		retries="0" version="1.0" check="false" />
+	<dubbo:reference id="iRoleAuthMenuService"
+		interface="com.pzj.base.service.sys.IRoleAuthMenuService" timeout="30000"
+		retries="0" version="1.0" check="false" />
+	<dubbo:reference id="iUserAuthRoleService"
+		interface="com.pzj.base.service.sys.IUserAuthRoleService" timeout="30000"
+		retries="0" version="1.0" check="false" />
+	<dubbo:reference id="iUserAuthMenuService"
+		interface="com.pzj.base.service.sys.IUserAuthMenuService" timeout="30000"
+		retries="0" version="1.0" check="false" />
+	<dubbo:reference id="iUserAuthOfficeService"
+		interface="com.pzj.base.service.sys.IUserAuthOfficeService" timeout="30000"
+		retries="0" version="1.0" check="false" />
+	<dubbo:reference id="iRoleAuthOfficeService"
+		interface="com.pzj.base.service.sys.IRoleAuthOfficeService" timeout="30000"
+		retries="0" version="1.0" check="false" />
+	<dubbo:reference id="iSpcreRelationService"
+		interface="com.pzj.base.service.sys.ISpcreRelationService" timeout="30000"
+		retries="0" version="1.0" check="false" />
+	<dubbo:reference id="iLabelService"
+		interface="com.pzj.base.service.sys.ILabelService" timeout="30000"
+		retries="0" version="1.0" check="false" />
+	<dubbo:reference id="iMenuService"
+		interface="com.pzj.base.service.sys.IMenuService" timeout="30000"
+		retries="0" version="1.0" check="false" />
+	<dubbo:reference id="iExtraRebateStrategyService"
+		interface="com.pzj.base.service.sys.IExtraRebateStrategyService"
+		timeout="30000" retries="0" version="1.0" check="false" />
+
+	<dubbo:reference id="iAppEquipmentService"
+		interface="com.pzj.base.service.sys.app.IAppEquipmentService" timeout="30000"
+		retries="0" version="1.0" check="false" />
+	<dubbo:reference id="iAppFeedbackService"
+		interface="com.pzj.base.service.sys.app.IAppFeedbackService" timeout="30000"
+		retries="0" version="1.0" check="false" />
+	<dubbo:reference id="iAppMessageService"
+		interface="com.pzj.base.service.sys.app.IAppMessageService" timeout="30000"
+		retries="0" version="1.0" check="false" />
+		
+	<dubbo:reference id="iSysSettlementRuleService"
+		interface="com.pzj.base.service.sys.ISysSettlementRuleService"
+		timeout="30000" retries="0" version="1.0" check="false" />
+	<dubbo:reference id="settlementCall"
+		interface="com.pzj.settlement.balance.service.SettlementCall"
+		timeout="30000" version="1.0" check="false" />
+	<dubbo:reference id="ReceiptOrderDetailService"
+		interface="com.pzj.settlement.balance.service.ReceiptOrderDetailService"
+		timeout="30000" version="1.0" check="false" />
+</beans>

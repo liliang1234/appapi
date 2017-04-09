@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+    
+    <description>Spring MVC Configuration</description>
+    <!-- 加载配置属性文件 -->
+	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/platform.properties" />
+	<!-- 使用Annotation自动注册Bean -->
+	<context:component-scan base-package="com.pzj" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+	</context:component-scan>
+
+	<!-- 默认的注解映射的支持，org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping -->
+	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
+		<mvc:message-converters register-defaults="true">
+			<!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+		    	<constructor-arg value="UTF-8" />
+			</bean>
+			<!-- 将Jackson2HttpMessageConverter的默认格式化输出为true -->
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="prettyPrint" value="true"/>
+                <property name="objectMapper">  
+                    <bean class="com.pzj.common.mapper.JsonMapper">
+						<property name="serializationInclusion">
+							<value type="com.fasterxml.jackson.annotation.JsonInclude.Include">ALWAYS</value>
+						</property>
+					</bean>
+                </property> 
+            </bean>
+		</mvc:message-converters>
+		<mvc:argument-resolvers>
+			<bean class="com.pzj.common.web.SecureModelAttributeMethodArgumentResolver">
+				<constructor-arg value="false"/>
+			</bean>
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+
+	<mvc:interceptors>
+		<!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
+		<bean class="com.pzj.platform.appapi.interceptor.AppApiInterceptor" />
+		<!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/bapi/**"/>
+			<mvc:exclude-mapping path="/seat/**"/>
+			<mvc:exclude-mapping path="/user/checkUserName"/>
+			<mvc:exclude-mapping path="/user/register"/>
+			<mvc:exclude-mapping path="/user/login"/>
+			<mvc:exclude-mapping path="/order/findOrdersByPhoneNum"/>
+			<mvc:exclude-mapping path="/order/findOrderDetailByPhoneNum"/>
+			<mvc:exclude-mapping path="/versionMessage/isversionUpdate"/>
+			<mvc:exclude-mapping path="/versionMessage/insertVersion"/>
+			<mvc:exclude-mapping path="/appapi/weixin/urlSign"/>
+			<bean class="com.pzj.platform.appapi.interceptor.LoginUserInterceptor">
+				<property name="customerService" ref="CustomerServiceApp" />
+			</bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+    <!-- REST中根据URL后缀自动判定Content-Type及相应的View -->
+	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+	    <property name="mediaTypes" >
+	        <map> 
+                <entry key="xml" value="application/xml"/> 
+                <entry key="json" value="application/json"/> 
+            </map>
+	    </property>
+        <property name="ignoreAcceptHeader" value="true"/>
+        <property name="favorPathExtension" value="true"/>
+	</bean>
+
+	<!-- 视图文件解析配置 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="${web.view.prefix}"/>
+		<property name="suffix" value="${web.view.suffix}"/>
+	</bean>
+	
+	<!-- 对静态资源文件的访问， 将无法mapping到Controller的path交给default servlet handler处理 -->
+	<mvc:default-servlet-handler/>
+	
+    
+	<!-- 上传文件拦截，设置最大上传文件大小   10M=10*1024*1024(B)=10485760 bytes -->  
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+        <property name="maxUploadSize" value="${web.maxUploadSize}" />  
+    </bean>
+    
+</beans>

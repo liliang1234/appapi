@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration debug="false" scan="true">
+	<property name="log.path" value="/data/logs/" />
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss} [%5p] %C{0}.%M - %m%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="appapi-log"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.path}/appapi.out</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.path}/appapi.out.%d{yyyyMMdd}</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss} [%5p] %C{0}.%M - %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="com.pzj" level="debug" />
+	<logger name="org.springframework" level="warn" />
+	<logger name="com.alibaba" level="warn" />
+	<logger name="org.apache" level="info" />
+
+	<root level="INFO">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="appapi-log" />
+	</root>
+</configuration>
